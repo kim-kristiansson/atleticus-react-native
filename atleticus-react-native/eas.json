@@ -1,0 +1,22 @@
+{
+  "cli": {
+    "version": ">= 7.0.0"
+  },
+  "build": {
+    "development": {
+      "env": {
+        "GOOGLE_SIGNIN_WEB_CLIENT_ID": "GOOGLE_SIGNIN_WEB_CLIENT_ID",
+        "ANDROID_PACKAGE_NAME": "ANDROID_PACKAGE_NAME"
+      },
+      "developmentClient": true,
+      "distribution": "internal"
+    },
+    "preview": {
+      "distribution": "internal"
+    },
+    "production": {}
+  },
+  "submit": {
+    "production": {}
+  }
+}

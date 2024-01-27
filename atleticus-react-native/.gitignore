@@ -33,3 +33,37 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
+
+# Android specific
+android/.gradle
+android/build
+android/*/build
+android/*/src/main/gen
+android/*/src/main/obj
+android/*/src/main/assets
+android/keystore.properties
+android/local.properties
+android/*.iml
+android/.idea
+*.jks
+*.keystore
+android/.cxx/
+
+# IDE Specific Files
+.vscode/
+.idea/
+*.iml
+
+# iOS Specific (if applicable)
+ios/build/
+ios/Pods/
+*.xcworkspace
+*.xcuserstate
+
+# Expo Updates
+metro.config.js
+
+# Miscellaneous Files
+*.log
+*.tmp
+*.temp
