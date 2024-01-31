@@ -13,6 +13,8 @@ import {
 	statusCodes,
 } from "@react-native-google-signin/google-signin";
 import * as Network from "expo-network";
+import { sendGoogleTokenToServer } from "../../../services/authService";
+import { User } from "../../../types/User";
 
 interface GoogleSignInError extends Error {
 	code?: string;
@@ -20,14 +22,15 @@ interface GoogleSignInError extends Error {
 
 export const GoogleAuth = () => {
 	const [error, setError] = useState<Error | unknown>(null);
-	const [userInfo, setUserInfo] = useState<GoogleUser | null>(null);
+	const [userInfo, setUserInfo] = useState<User | null>(null);
 	const [networkState, setNetworkState] =
 		useState<Network.NetworkState | null>(null);
 	const [isLoading, setIsLoading] = useState(false);
 
 	const configureGoogleSignin = () => {
 		GoogleSignin.configure({
-			webClientId: process.env.GOOGLE_SIGNIN_WEB_CLIENT_ID,
+			webClientId:
+				"368454890565-6tgdn2f5560es98gmf9s1dfs7e7glg20.apps.googleusercontent.com",
 		});
 	};
 
@@ -56,14 +59,21 @@ export const GoogleAuth = () => {
 
 		try {
 			setIsLoading(true);
-
 			await GoogleSignin.hasPlayServices({
 				showPlayServicesUpdateDialog: true,
 			});
-
 			const tempUserInfo = await GoogleSignin.signIn();
-			setUserInfo(tempUserInfo);
-			setError(null);
+			console.log(tempUserInfo);
+
+			if (tempUserInfo.idToken) {
+				const user = await sendGoogleTokenToServer(
+					tempUserInfo.idToken
+				);
+				setUserInfo(user);
+				setError(null);
+			} else {
+				throw new Error("Google Sign-In token is missing");
+			}
 		} catch (e) {
 			if (e instanceof Error) {
 				const signInError = e as GoogleSignInError;
