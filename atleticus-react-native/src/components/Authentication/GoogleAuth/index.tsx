@@ -29,8 +29,7 @@ export const GoogleAuth = () => {
 
 	const configureGoogleSignin = () => {
 		GoogleSignin.configure({
-			webClientId:
-				"368454890565-6tgdn2f5560es98gmf9s1dfs7e7glg20.apps.googleusercontent.com",
+			webClientId: process.env.GOOGLE_SIGNIN_WEB_CLIENT_ID,
 		});
 	};
 
