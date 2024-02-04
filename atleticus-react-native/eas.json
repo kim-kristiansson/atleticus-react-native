@@ -4,9 +4,6 @@
   },
   "build": {
     "development": {
-      "env": {
-        "GOOGLE_SIGNIN_WEB_CLIENT_ID": "GOOGLE_SIGNIN_WEB_CLIENT_ID"
-      },
       "developmentClient": true,
       "distribution": "internal"
     },

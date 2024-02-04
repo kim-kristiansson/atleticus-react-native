@@ -31,6 +31,7 @@
       "favicon": "./assets/favicon.png"
     },
     "extra": {
+      "googleSignInWebClientId": "368454890565-6tgdn2f5560es98gmf9s1dfs7e7glg20.apps.googleusercontent.com",
       "eas": {
         "projectId": "60e70f9e-82e7-4b6e-b05b-9a699a5066a9"
       }

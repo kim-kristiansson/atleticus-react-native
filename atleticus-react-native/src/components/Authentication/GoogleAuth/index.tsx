@@ -15,12 +15,19 @@ import {
 import * as Network from "expo-network";
 import { sendGoogleTokenToServer } from "../../../services/authService";
 import { User } from "../../../types/User";
+import Constants from "expo-constants";
 
 interface GoogleSignInError extends Error {
-	code?: string;
+	code?: string; // Assuming 'code' is an optional property you expect in Google sign-in errors
 }
 
 export const GoogleAuth = () => {
+	const extra = Constants.expoConfig?.extra as {
+		googleSignInWebClientId?: string;
+	};
+
+	const googleSignInWebClientId = extra?.googleSignInWebClientId;
+
 	const [error, setError] = useState<Error | unknown>(null);
 	const [userInfo, setUserInfo] = useState<User | null>(null);
 	const [networkState, setNetworkState] =
@@ -29,7 +36,7 @@ export const GoogleAuth = () => {
 
 	const configureGoogleSignin = () => {
 		GoogleSignin.configure({
-			webClientId: process.env.GOOGLE_SIGNIN_WEB_CLIENT_ID,
+			webClientId: googleSignInWebClientId,
 		});
 	};
 
@@ -42,11 +49,6 @@ export const GoogleAuth = () => {
 		const state = await Network.getNetworkStateAsync();
 		setNetworkState(state);
 	};
-
-	useEffect(() => {
-		console.log(userInfo);
-		console.log(error);
-	}, [userInfo, error]);
 
 	const handleSignIn = async () => {
 		if (!networkState?.isConnected) {
@@ -62,7 +64,6 @@ export const GoogleAuth = () => {
 				showPlayServicesUpdateDialog: true,
 			});
 			const tempUserInfo = await GoogleSignin.signIn();
-			console.log(tempUserInfo);
 
 			if (tempUserInfo.idToken) {
 				const user = await sendGoogleTokenToServer(

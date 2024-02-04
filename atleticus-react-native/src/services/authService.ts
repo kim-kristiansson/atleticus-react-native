@@ -4,9 +4,10 @@ import axios, { AxiosError } from "axios";
 
 export const sendGoogleTokenToServer = async (token: string): Promise<User> => {
 	try {
-		const response = await api.post<User>("/authentication/google-signin", {
+		const response = await api.post<any>("/authentication/google-signin", {
 			token,
 		});
+
 		return response.data;
 	} catch (error) {
 		// Check if error is an AxiosError
